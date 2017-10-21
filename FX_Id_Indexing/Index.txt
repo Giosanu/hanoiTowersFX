@@ -1,0 +1,75 @@
+
+Singular Case:
+
+	Towers:                 #towersFieldSC
+
+	Disks:                  #disksFieldSC
+	
+	Run: 			#runSC
+
+	Choose Graphical Repr:  #GRChoose
+
+		- Prob dom:     #drawDroblemDomain
+		- Towers:       #drawTowers
+
+	Choose Strat:           #StratChoose
+	
+		-Random:        #randomStrat
+		-BKT:           #bktStrat
+		-Hill Climbing: #hcStrat
+		-A*:            #aStrat
+
+	Canvas:			#canvas
+
+	Statistics:
+	
+		-Duration:      #durationSC
+		-Length:	#lengthSC
+		-Solutions:	#solutionsSC
+		-Optimal Sol:   #optimalSC
+
+Multiple Cases:
+
+	Towers:                 #towersFieldMC
+
+	Disks:                  #disksFieldMC
+
+	Cases:			#casesFieldMC
+	
+	Run: 			#runMC
+
+	BKT Strat:
+
+		- Sol found:    #solFoundBKT
+		- Avg duration: #avgDurBKT
+		- Avg sol len:  #avgSolLenBKT
+		- Best time:    #bestTimeBKT
+		- Worst time:   #worstTimeBKT
+		- Optimal sol:  #optimalSolBKT
+
+	Random Strat:
+
+		- Sol found:    #solFoundR
+		- Avg duration: #avgDurR
+		- Avg sol len:  #avgSolLenR
+		- Best time:    #bestTimeR
+		- Worst time:   #worstTimeR
+		- Optimal sol:  #optimalSolR
+
+	Hill Climbing Strat:
+
+		- Sol found:    #solFoundHC
+		- Avg duration: #avgDurHC
+		- Avg sol len:  #avgSolLenHC
+		- Best time:    #bestTimeHC
+		- Worst time:   #worstTimeHC
+		- Optimal sol:  #optimalSolHC
+
+	A* Strat:
+
+		- Sol found:    #solFoundAS
+		- Avg duration: #avgDurAS
+		- Avg sol len:  #avgSolLenAS
+		- Best time:    #bestTimeAS
+		- Worst time:   #worstTimeAS
+		- Optimal sol:  #optimalSolAS
