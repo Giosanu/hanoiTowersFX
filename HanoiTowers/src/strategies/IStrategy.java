@@ -1,5 +1,9 @@
 package strategies;
 
+import items.State;
+
+import java.util.ArrayList;
+
 interface IStrategy {
-    public void solve(int numOfTowers, int numOfDisks);
+    ArrayList<State> solve(int numOfTowers, int numOfDisks);
 }

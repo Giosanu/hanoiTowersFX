@@ -1,5 +1,9 @@
 package strategies;
 
+import items.State;
+
+import java.util.ArrayList;
+
 public class Context {
     private IStrategy strategy;
 
@@ -7,7 +11,7 @@ public class Context {
         this.strategy = strategy;
     }
 
-        public void executeStrategy(int numOfTowers, int numOfDisks){
-            strategy.solve(numOfTowers, numOfDisks);
+        public ArrayList<State> executeStrategy(int numOfTowers, int numOfDisks){
+            return strategy.solve(numOfTowers, numOfDisks);
     }
 }

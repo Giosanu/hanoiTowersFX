@@ -9,7 +9,7 @@ public class State {
     private int NumOfTowers;
     private int[] DiskPlacement;
     private int Score;
-    private ArrayList<State> Neighbours;
+    private ArrayList<State> Neighbours = new ArrayList<>();
 
     public State(){
     }
@@ -51,7 +51,7 @@ public class State {
     }
 
     public void ComputeNeighbours(){
-        Neighbours = new ArrayList<>();
+        Neighbours.clear();
         for(int i = 0; i< DiskPlacement.length; i++){
             int[] placeable = new int[NumOfTowers];
             Arrays.fill(placeable, 1);

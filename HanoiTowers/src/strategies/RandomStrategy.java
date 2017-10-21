@@ -8,10 +8,10 @@ public class RandomStrategy implements IStrategy {
     private ArrayList<State> visitedStates = new ArrayList<>();
 
     @Override
-    public void solve(int numOfTowers, int numOfDisks) {
+    public ArrayList<State> solve(int numOfTowers, int numOfDisks) {
         State s = new State();
         State randomState = new State(numOfTowers, numOfDisks);
-        int counter = 1000;
+        int counter = numOfDisks*numOfTowers*2000;
 
         s.Initialize(numOfTowers, numOfDisks);
         visitedStates.add(s);
@@ -19,7 +19,7 @@ public class RandomStrategy implements IStrategy {
         s.ComputeNeighbours();
 
         while(!s.IsFinalState()){
-            if(currentCount < counter){
+            if(currentCount < counter && !isBlockingState(s)){
                 randomState.RandomizeState();
                 if(!isAlreadyVisited(randomState) && isNeighbour(s, randomState)){
                     s = new State(randomState);
@@ -35,9 +35,11 @@ public class RandomStrategy implements IStrategy {
             }
         }
 
-        for(State solution : visitedStates){
+        /*for(State solution : visitedStates){
             System.out.println(solution.toString());
-        }
+        }*/
+
+        return visitedStates;
     }
 
     private boolean isNeighbour(State state, State possibleNeighbour){
@@ -46,5 +48,14 @@ public class RandomStrategy implements IStrategy {
 
     private boolean isAlreadyVisited(State state){
         return visitedStates.contains(state);
+    }
+
+    private boolean isBlockingState(State state){
+        for(State nghbr : state.getNeighbours()){
+            if(!visitedStates.contains(nghbr)){
+                return false;
+            }
+        }
+        return true;
     }
 }
