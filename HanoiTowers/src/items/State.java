@@ -1,6 +1,7 @@
 package items;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class State {
 
@@ -8,22 +9,34 @@ public class State {
     private int NumOfTowers;
     private int[] DiskPlacement;
     private int Score;
-    private ArrayList<State> Neighbours;
+    private ArrayList<State> Neighbours = new ArrayList<>();
 
     public State(){
-        Neighbours = new ArrayList<>();
+    }
+
+    public State(int numOfTowers, int numOfDisks){
+        NumOfTowers = numOfTowers;
+        DiskPlacement = new int[numOfDisks];
     }
 
     public State(int numOfTowers, int ... diskPlacement) {
         NumOfTowers = numOfTowers;
         DiskPlacement = diskPlacement;
-        Neighbours = new ArrayList<>();
+    }
+
+    public State(State state) {
+        this.NumOfTowers = state.NumOfTowers;
+        this.DiskPlacement = Arrays.copyOf(state.DiskPlacement, state.DiskPlacement.length);
+    }
+
+    public void ResetState(){
+        Arrays.fill(DiskPlacement, 0);
     }
 
     public void Initialize(int numOfTowers, int numOfDisks){
         this.NumOfTowers = numOfTowers;
         this.DiskPlacement = new int[numOfDisks];
-        Arrays.fill(DiskPlacement, 1);
+        Arrays.fill(DiskPlacement, 0);
     }
 
     public ArrayList<State> getNeighbours() {
@@ -32,7 +45,7 @@ public class State {
 
     public boolean IsFinalState(){
         for (int Disk : DiskPlacement)
-            if (Disk != NumOfTowers)
+            if (Disk != NumOfTowers - 1)
                 return false;
         return true;
     }
@@ -59,6 +72,13 @@ public class State {
         }
     }
 
+    public void RandomizeState() {
+        for (int i = 0; i < DiskPlacement.length; i++) {
+            Random rndGen = new Random();
+            DiskPlacement[i] = rndGen.nextInt(NumOfTowers);
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
@@ -69,5 +89,16 @@ public class State {
 
         }
         return '(' + Integer.toString(NumOfTowers) + ' ' + s.toString() +')';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        State toCompare = (State) obj;
+        for(int i = 0; i < this.DiskPlacement.length; i++){
+            if(this.DiskPlacement[i] != toCompare.DiskPlacement[i]){
+                return false;
+            }
+        }
+        return true;
     }
 }
