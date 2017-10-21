@@ -9,7 +9,7 @@ public class State {
     private int NumOfTowers;
     private int[] DiskPlacement;
     private int Score;
-    private ArrayList<State> Neighbours = new ArrayList<>();
+    private ArrayList<State> Neighbours;
 
     public State(){
     }
@@ -51,6 +51,7 @@ public class State {
     }
 
     public void ComputeNeighbours(){
+        Neighbours = new ArrayList<>();
         for(int i = 0; i< DiskPlacement.length; i++){
             int[] placeable = new int[NumOfTowers];
             Arrays.fill(placeable, 1);
@@ -85,8 +86,6 @@ public class State {
         for (int Disk:
                 DiskPlacement) {
             s.append(Disk);
-            s.append(' ');
-
         }
         return '(' + Integer.toString(NumOfTowers) + ' ' + s.toString() +')';
     }

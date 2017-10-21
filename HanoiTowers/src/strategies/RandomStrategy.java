@@ -28,6 +28,7 @@ public class RandomStrategy implements IStrategy {
                 } else currentCount++;
             } else {
                 s.ResetState();
+                s.ComputeNeighbours();
                 currentCount = 0;
                 visitedStates.clear();
                 visitedStates.add(s);
