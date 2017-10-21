@@ -1,0 +1,5 @@
+package strategies;
+
+interface IStrategy {
+
+}
