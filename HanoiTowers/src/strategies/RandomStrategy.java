@@ -18,14 +18,20 @@ public class RandomStrategy implements IStrategy {
         int currentCount = 0;
         s.ComputeNeighbours();
 
-        while(!s.IsFinalState()){
-            if(currentCount < counter && !isBlockingState(s)){
-                randomState.RandomizeState();
-                if(!isAlreadyVisited(randomState) && isNeighbour(s, randomState)){
-                    s = new State(randomState);
-                    s.ComputeNeighbours();
-                    visitedStates.add(s);
-                } else currentCount++;
+        long start = System.currentTimeMillis();
+        long end = start + 20*1000;
+        boolean timeflag = false;
+
+        while(!s.IsFinalState()) {
+            if (currentCount < counter && !isBlockingState(s)) {
+                if (System.currentTimeMillis() < end) {
+                    randomState.RandomizeState();
+                    if (!isAlreadyVisited(randomState) && isNeighbour(s, randomState)) {
+                        s = new State(randomState);
+                        s.ComputeNeighbours();
+                        visitedStates.add(s);
+                    } else currentCount++;
+                } else {timeflag = true; break;}
             } else {
                 s.ResetState();
                 s.ComputeNeighbours();
@@ -35,9 +41,14 @@ public class RandomStrategy implements IStrategy {
             }
         }
 
-        /*for(State solution : visitedStates){
+        if(timeflag){
+            System.out.println("Program kekked");
+            return null;
+        }
+
+        for(State solution : visitedStates){
             System.out.println(solution.toString());
-        }*/
+        }
 
         return visitedStates;
     }
