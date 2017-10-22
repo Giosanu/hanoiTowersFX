@@ -117,7 +117,7 @@ public class Controller {
             }
         }
         timer = new Timer(true);
-        timer.schedule(new NextMove(), 0, 100);
+        timer.schedule(new NextMove(), 0, 200);
     }
 
 
