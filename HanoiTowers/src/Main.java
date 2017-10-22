@@ -2,6 +2,6 @@ import items.ContextManager;
 
 public class Main {
     public static void main(String[] args) {
-        ContextManager.getSolution(7, 7, 0);
+        ContextManager.getSolution(3, 3, 1);
     }
 }

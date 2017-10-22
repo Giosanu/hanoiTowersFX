@@ -13,7 +13,7 @@ public class ContextManager {
             return context.executeStrategy(numOfTowers, numOfDisks);
         } else if (strategy == 1) {
             context = new Context(new BacktrackingStrategy());
-            return null;
+            return context.executeStrategy(numOfTowers, numOfDisks);
         } else if (strategy == 2) {
             context = new Context(new HillClimbingStrategy());
             return null;
