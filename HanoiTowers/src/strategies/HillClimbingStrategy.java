@@ -18,6 +18,7 @@ public class HillClimbingStrategy implements IStrategy {
         visitedStates.add(state);
         int counter = numOfDisks * numOfTowers * 2000;
         int currentCounter = 0;
+        Random rnd = new Random();
         boolean good = true;
 
         while (!state.IsFinalState()) {
@@ -37,7 +38,6 @@ public class HillClimbingStrategy implements IStrategy {
                     continue;
                 }
 
-                Random rnd = new Random();
                 int stateToPick = rnd.nextInt(state.getNeighbours().size());
                 state = state.getNeighbours().get(stateToPick);
                 if(isAlreadyVisited(state)) {

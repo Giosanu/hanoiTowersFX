@@ -19,7 +19,10 @@ public class ContextManager {
             return context.executeStrategy(numOfTowers, numOfDisks);
         } else if (strategy == 3){
             context = new Context(new AStarStrategy());
-        return null;
+            return null;
+        } else if(strategy == 4){
+            context = new Context(new EfficientRandom());
+            return context.executeStrategy(numOfTowers, numOfDisks);
         }
         return null;
     }
