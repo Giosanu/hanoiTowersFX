@@ -98,6 +98,10 @@ public class Controller {
     }
 
     public void runListenerSC(ActionEvent actionEvent) {
+        try{
+            timer.cancel();
+        }
+        catch (Exception e){}
         nextMoveButton.setDisable(false);
         canvasFlowPane.getChildren().clear();
         towers = Integer.parseInt(towersFieldSC.getText());
