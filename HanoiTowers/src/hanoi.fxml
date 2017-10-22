@@ -21,8 +21,8 @@
                <items>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="150.0" prefWidth="598.0">
                      <children>
-                        <TextField fx:id="towersFieldSC" layoutX="74.0" layoutY="18.0"  prefHeight="25.0" prefWidth="72.0" promptText="Ex: &quot;9&quot;" />
-                        <TextField fx:id="disksFieldSC" layoutX="216.0" layoutY="18.0"  prefHeight="25.0" prefWidth="82.0" promptText="Ex: &quot;6&quot;" />
+                        <TextField fx:id="towersFieldSC" layoutX="74.0" layoutY="18.0" prefHeight="25.0" prefWidth="72.0" promptText="Ex: &quot;9&quot;" />
+                        <TextField fx:id="disksFieldSC" layoutX="216.0" layoutY="18.0" prefHeight="25.0" prefWidth="82.0" promptText="Ex: &quot;6&quot;" />
                         <Label layoutX="21.0" layoutY="22.0" text="Towers: " />
                         <Label layoutX="171.0" layoutY="22.0" text="Disks: " />
                         <MenuButton fx:id="StratChoose" layoutX="562.0" layoutY="18.0" mnemonicParsing="false" text="Choose Strategy">
@@ -44,7 +44,7 @@
                   </AnchorPane>
                   <SplitPane dividerPositions="0.951310861423221" orientation="VERTICAL" prefHeight="557.0" prefWidth="800.0">
                      <items>
-                        <FlowPane fx:id="canvasFlowPane" prefHeight="200.0" prefWidth="200.0" />
+                        <FlowPane fx:id="canvasFlowPane" prefHeight="505.0" prefWidth="800.0" />
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="800.0">
                            <children>
                               <Label layoutX="122.0" layoutY="6.0" text="Duration: " />
@@ -56,6 +56,11 @@
                               <Text fx:id="solutionsSC" layoutX="461.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
                               <Text fx:id="optimalSC" layoutX="666.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
                               <Label layoutX="195.0" layoutY="6.0" text="milisec" />
+                              <Button fx:id="nextMoveButton" layoutX="705.0" layoutY="2.0" mnemonicParsing="false" onAction="#nextMoveListener" prefHeight="19.0" prefWidth="68.0" text="Next Move">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
                      </items>
