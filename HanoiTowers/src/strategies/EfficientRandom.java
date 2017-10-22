@@ -26,7 +26,7 @@ public class EfficientRandom implements IStrategy {
 
         while(!s.IsFinalState()) {
             if (currentCount < counter && !isBlockingState(s)) {
-                //if (System.currentTimeMillis() < end) {
+                if (System.currentTimeMillis() < end) {
                     int stateToPick = rnd.nextInt(s.getNeighbours().size());
                     randomState = s.getNeighbours().get(stateToPick);
                     if (!isAlreadyVisited(randomState)) {
@@ -34,7 +34,7 @@ public class EfficientRandom implements IStrategy {
                         s.ComputeNeighbours();
                         visitedStates.add(s);
                     } else currentCount++;
-                //} else {timeflag = true; break;}
+                } else {timeflag = true; break;}
             } else {
                 s.ResetState();
                 s.ComputeNeighbours();
