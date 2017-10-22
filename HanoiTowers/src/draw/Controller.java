@@ -12,6 +12,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import static java.lang.Math.sqrt;
 
 public class Controller {
@@ -38,7 +41,7 @@ public class Controller {
     int viewOption = -1;
     int towers;
     int disks;
-
+    Timer timer;
     ArrayList<State> sol = new ArrayList<>();
     ArrayList<Canvas> towerCanvases = new ArrayList<>();
     int z;
@@ -48,7 +51,7 @@ public class Controller {
 
     @FXML
     public void initialize() {
-
+        nextMoveButton.setVisible(false);
     }
 
 //First Tab
@@ -72,6 +75,12 @@ public class Controller {
         currStrat = 3;
     }
 
+
+    public void randomNeighborListener(ActionEvent actionEvent) {
+        StratChoose.setText(((MenuItem)actionEvent.getSource()).getText());
+        currStrat = 4;
+    }
+
     public void probDomainListener(ActionEvent actionEvent) {
         GRChoose.setText(((MenuItem)actionEvent.getSource()).getText());
         viewOption = 0;
@@ -82,7 +91,11 @@ public class Controller {
         viewOption = 1;
     }
 
-
+    class NextMove extends TimerTask {
+        public void run() {
+            nextMoveButton.fire();
+        }
+    }
 
     public void runListenerSC(ActionEvent actionEvent) {
         nextMoveButton.setDisable(false);
@@ -96,16 +109,19 @@ public class Controller {
                 DrawSolution(viewOption);
             else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Time exceeded erorr");
+                alert.setTitle("Time exceeded error");
                 alert.setHeaderText("Finding the solution exceeded 20 sec!");
                 alert.setContentText("Ooops, the solution you're looking for with the specified strategy took too long! Try again!");
 
                 alert.showAndWait();
             }
-
         }
+        timer = new Timer(true);
+        timer.schedule(new NextMove(), 0, 100);
     }
 
+
+    // And From your main() method or any other method
     private void DrawSolution(int option) {
         if (option==1){
             DrawTowers();
@@ -163,6 +179,7 @@ public class Controller {
     public void nextMoveListener(ActionEvent actionEvent) {
         if (currStep == sol.size()-1){
             ((Button)(actionEvent.getSource())).setDisable(true);
+            timer.cancel();
         }
         int disksPerTower;
         double base = 3.25*w/5;
@@ -216,4 +233,5 @@ public class Controller {
 
     public void runListenerMC(ActionEvent actionEvent) {
     }
+
 }

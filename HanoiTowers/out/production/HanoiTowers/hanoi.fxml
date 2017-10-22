@@ -31,6 +31,7 @@
                               <MenuItem fx:id="bktStrat" mnemonicParsing="false" onAction="#bktStratListener" text="Backtracking" />
                               <MenuItem fx:id="hcStrat" mnemonicParsing="false" onAction="#hcStratListener" text="Hill Climbing" />
                               <MenuItem fx:id="aStrat" mnemonicParsing="false" onAction="#aStratListener" text="A*" />
+                              <MenuItem fx:id="aStrat1" mnemonicParsing="false" onAction="#randomNeighborListener" text="Random Neighbor" />
                            </items>
                         </MenuButton>
                         <MenuButton fx:id="GRChoose" layoutX="320.0" layoutY="18.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="209.0" text="Choose Graphical Representation">
