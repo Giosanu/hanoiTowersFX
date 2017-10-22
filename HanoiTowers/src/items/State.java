@@ -5,11 +5,14 @@ import java.util.Random;
 
 public class State {
 
-    private boolean visited;
     private int NumOfTowers;
-    private int[] DiskPlacement;
+    public int[] DiskPlacement;
     private int Score;
     private ArrayList<State> Neighbours = new ArrayList<>();
+
+    public int getScore() {
+        return Score;
+    }
 
     public State(){
     }
@@ -19,7 +22,7 @@ public class State {
         DiskPlacement = new int[numOfDisks];
     }
 
-    public State(int numOfTowers, int ... diskPlacement) {
+    private State(int numOfTowers, int ... diskPlacement) {
         NumOfTowers = numOfTowers;
         DiskPlacement = diskPlacement;
     }
@@ -80,14 +83,22 @@ public class State {
         }
     }
 
+    public void ComputeScore(){
+        Score = 0;
+        for (int aDiskPlacement :DiskPlacement) {
+            Score+=aDiskPlacement;
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         for (int Disk:
                 DiskPlacement) {
             s.append(Disk);
+            s.append(' ');
         }
-        return '(' + Integer.toString(NumOfTowers) + ' ' + s.toString() +')';
+        return '(' + Integer.toString(NumOfTowers) + ' ' + s.toString().trim() +')';
     }
 
     @Override
