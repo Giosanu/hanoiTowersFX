@@ -3,18 +3,16 @@ package strategies;
 import items.State;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
+import java.util.*;
 
 public class HillClimbingStrategy implements IStrategy {
-    private ArrayList<State> visitedStates = new ArrayList<>();
+
     @Override
     public ArrayList<State> solve(int numOfTowers, int numOfDisks) {
         State state = new State();
         state.Initialize(numOfTowers, numOfDisks);
         state.ComputeScore();
-        state.ComputeNeighbours();
+        insertIntoPool(state.ComputeNeighbours(), numOfTowers);
         visitedStates.add(state);
         int counter = numOfDisks * numOfTowers * 2000;
         int currentCounter = 0;
@@ -23,13 +21,11 @@ public class HillClimbingStrategy implements IStrategy {
 
         while (!state.IsFinalState()) {
             if (good && currentCounter < counter && !isBlockingState(state)) {
-
-
-                Iterator<State> neighbours = state.getNeighbours().iterator();
+                Iterator<String> neighbours = state.getNeighbours().iterator();
                 while(neighbours.hasNext()){
-                    State nghbr = neighbours.next();
-                    nghbr.ComputeScore();
-                    if(nghbr.getScore() <  state.getScore())
+                    String nghbr = neighbours.next();
+                    statePool.get(nghbr).ComputeScore();
+                    if(statePool.get(nghbr).getScore() <  state.getScore())
                         neighbours.remove();
                 }
 
@@ -39,19 +35,19 @@ public class HillClimbingStrategy implements IStrategy {
                 }
 
                 int stateToPick = rnd.nextInt(state.getNeighbours().size());
-                state = state.getNeighbours().get(stateToPick);
+                state = statePool.get(state.getNeighbours().get(stateToPick));
                 if(isAlreadyVisited(state)) {
                     currentCounter++;
                     continue;
                 }
                 visitedStates.add(state);
-                state.ComputeNeighbours();
+                insertIntoPool(state.ComputeNeighbours(), numOfTowers);
             } else {
                 state.ResetState();
                 currentCounter = 0;
                 visitedStates.clear();
                 visitedStates.add(state);
-                state.ComputeNeighbours();
+                insertIntoPool(state.ComputeNeighbours(), numOfTowers);
                 state.ComputeScore();
                 good = true;
             }
@@ -63,26 +59,9 @@ public class HillClimbingStrategy implements IStrategy {
         return visitedStates;
     }
 
-    private boolean isNeighbour(State state, State possibleNeighbour){
-        return state.getNeighbours().contains(possibleNeighbour);
-    }
-
-    private boolean isAlreadyVisited(State state){
-        return visitedStates.contains(state);
-    }
-
-    private boolean isBlockingState(State state){
-        for(State nghbr : state.getNeighbours()){
-            if(!visitedStates.contains(nghbr)){
-                return false;
-            }
-        }
-        return true;
-    }
-
     private boolean isLocalOptimum(State state){
-        for(State nghbr: state.getNeighbours()){
-            if(nghbr.getScore() > state.getScore())
+        for(String nghbr: state.getNeighbours()){
+            if(statePool.get(nghbr).getScore() > state.getScore())
                 return true;
         }
         return false;

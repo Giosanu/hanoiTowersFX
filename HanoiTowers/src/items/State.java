@@ -18,9 +18,20 @@ public class State {
     public State(){
     }
 
+    public State(int numOfTowers, int numOfDisks, String id){
+        NumOfTowers = numOfTowers;
+        String[] strings =  id.replace("[", "").replace("]", "").split(", ");
+        DiskPlacement = new int[numOfDisks];
+        for (int i = 0; i < DiskPlacement.length; i++) {
+            DiskPlacement[i] = Integer.parseInt(strings[i]);
+        }
+    }
+
+
     public State(int numOfTowers, int numOfDisks){
         NumOfTowers = numOfTowers;
         DiskPlacement = new int[numOfDisks];
+        ID = Arrays.toString(DiskPlacement);
     }
 
     public State(int numOfTowers, int... diskPlacement) {

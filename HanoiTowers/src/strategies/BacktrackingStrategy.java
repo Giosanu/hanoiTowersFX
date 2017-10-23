@@ -1,71 +1,87 @@
 package strategies;
 
+import items.ProblemDomain;
 import items.State;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.LinkedList;
 
 public class BacktrackingStrategy implements IStrategy {
-    private Deque<State> currentStack = new ArrayDeque<>();
-    private ArrayList<ArrayList<State>> solutions =  new ArrayList<>();
-    private ArrayList<State> visitedStates = new ArrayList<>();
-    private ArrayList<State> currentSolution = new ArrayList<>();
+
+    ArrayList<String> added = new ArrayList<>();
+    static int counter = 99999;
+
+    private static String START ;
+    private static String END ;
+    LinkedList<String> bestSol = new LinkedList<>();
 
     @Override
     public ArrayList<State> solve(int numOfTowers, int numOfDisks) {
-        State state = new State();
-        state.Initialize(numOfTowers, numOfDisks);
-        currentStack.addFirst(state);
+        ProblemDomain problemDomain = new ProblemDomain();
+        State state = new State(numOfTowers,numOfDisks);
+        state.ResetState();
+        START = state.ID;
+        END = "[";
+        for (int i=0;i<numOfDisks-1;i++){
+            END = END + (numOfTowers-1) + ", ";
+        }
+        END = END+ (numOfTowers-1) + "]";
+        LinkedList<String> visited = new LinkedList();
+        visited.add(state.ID);
 
+        addNodes(problemDomain, state);
+        depthFirst(problemDomain, visited);
 
-        while(!currentStack.isEmpty()){
-            state = currentStack.poll();
-            if(visitedStates.contains(state)){
+        ArrayList<State> solution = new ArrayList<>();
+
+        for (String s : bestSol){
+            System.out.print(s + " ");
+            solution.add(new State(numOfTowers,numOfDisks,s));
+        }
+        return solution;
+    }
+
+    private void depthFirst(ProblemDomain graph, LinkedList<String> visited) {
+        LinkedList<String> nodes = graph.adjacentNodes(visited.getLast());
+        for (String node : nodes) {
+            if (visited.contains(node)) {
                 continue;
             }
-            currentSolution.add(state);
-
-            if(state.IsFinalState()){
-                for (State st : currentSolution) {
-                    System.out.println(st);
-                }
-                return currentSolution;
+            if (node.equals(END)) {
+                visited.add(node);
+                printPath(visited);
+                visited.removeLast();
+                break;
             }
-
-            visitedStates.add(state);
-            state.ComputeNeighbours();
-            if(isBlockingState(state)){
-                currentSolution.remove(state);
+        }
+        for (String node : nodes) {
+            if (visited.contains(node) || node.equals(END)) {
                 continue;
             }
-            for(State nghbr : state.getNeighbours()){
-                currentStack.addFirst(nghbr);
-            }
+            visited.addLast(node);
+            depthFirst(graph, visited);
+            visited.removeLast();
         }
-
-        for (State st : solutions.get(0)) {
-            System.out.println(st);
-        }
-
-        return null;
     }
 
-    private boolean isNeighbour(State state, State possibleNeighbour){
-        return state.getNeighbours().contains(possibleNeighbour);
-    }
-
-    private boolean isAlreadyVisited(State state){
-        return visitedStates.contains(state);
-    }
-
-    private boolean isBlockingState(State state){
-        for(State nghbr : state.getNeighbours()){
-            if(!visitedStates.contains(nghbr)){
-                return false;
-            }
+    private void printPath(LinkedList<String> visited) {
+        if (visited.size()<counter){
+            System.out.println("YUOLO");
+            counter = visited.size();
+            bestSol = new LinkedList<>(visited);
         }
-        return true;
+    }
+
+    private void addNodes(ProblemDomain problemDomain, State state) {
+        added.add(state.ID);
+        state.ComputeNeighbours();
+        for (State st : state.getNeighbours()) {
+            problemDomain.addEdge(state.ID,st.ID);
+            if(!added.contains(st.ID))
+                addNodes(problemDomain, st);
+        }
     }
 
 }
