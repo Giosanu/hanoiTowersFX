@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Deque;
 
 public class BacktrackingStrategy implements IStrategy {
-    /*private Deque<State> currentStack = new ArrayDeque<>();
+    private Deque<State> currentStack = new ArrayDeque<>();
     private ArrayList<ArrayList<State>> solutions =  new ArrayList<>();
     private ArrayList<State> visitedStates = new ArrayList<>();
     private ArrayList<State> currentSolution = new ArrayList<>();
@@ -27,9 +27,10 @@ public class BacktrackingStrategy implements IStrategy {
             currentSolution.add(state);
 
             if(state.IsFinalState()){
-                solutions.add(new ArrayList<>(currentSolution));
-                currentSolution.remove(state);
-                continue;
+                for (State st : currentSolution) {
+                    System.out.println(st);
+                }
+                return currentSolution;
             }
 
             visitedStates.add(state);
@@ -43,7 +44,7 @@ public class BacktrackingStrategy implements IStrategy {
             }
         }
 
-        for (State st : solutions.get(1)) {
+        for (State st : solutions.get(0)) {
             System.out.println(st);
         }
 
@@ -65,10 +66,6 @@ public class BacktrackingStrategy implements IStrategy {
             }
         }
         return true;
-    }*/
-
-    @Override
-    public ArrayList<State> solve(int numOfTowers, int numOfDisks) {
-        return null;
     }
+
 }

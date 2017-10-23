@@ -5,6 +5,7 @@ import java.util.Random;
 
 public class State {
 
+    public String ID;
     private int NumOfTowers;
     public int[] DiskPlacement;
     private int Score;
@@ -22,14 +23,16 @@ public class State {
         DiskPlacement = new int[numOfDisks];
     }
 
-    private State(int numOfTowers, int ... diskPlacement) {
+    public State(int numOfTowers, int... diskPlacement) {
         NumOfTowers = numOfTowers;
         DiskPlacement = diskPlacement;
+        ID = Arrays.toString(diskPlacement);
     }
 
     public State(State state) {
         this.NumOfTowers = state.NumOfTowers;
         this.DiskPlacement = Arrays.copyOf(state.DiskPlacement, state.DiskPlacement.length);
+        ID = Arrays.toString(this.DiskPlacement);
     }
 
     public void ResetState(){
@@ -40,6 +43,7 @@ public class State {
         this.NumOfTowers = numOfTowers;
         this.DiskPlacement = new int[numOfDisks];
         Arrays.fill(DiskPlacement, 0);
+        ID = Arrays.toString(DiskPlacement);
     }
 
     public ArrayList<State> getNeighbours() {
