@@ -56,7 +56,7 @@
                               <Text fx:id="lengthSC" layoutX="316.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
                               <Text fx:id="solutionsSC" layoutX="461.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
                               <Text fx:id="optimalSC" layoutX="666.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
-                              <Label layoutX="195.0" layoutY="6.0" text="milisec" />
+                              <Label layoutX="195.0" layoutY="6.0" text="sec" />
                               <Button fx:id="nextMoveButton" layoutX="705.0" layoutY="2.0" mnemonicParsing="false" onAction="#nextMoveListener" prefHeight="19.0" prefWidth="68.0" text="Next Move">
                                  <font>
                                     <Font size="10.0" />

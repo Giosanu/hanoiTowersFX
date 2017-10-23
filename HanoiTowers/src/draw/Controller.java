@@ -11,6 +11,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -36,6 +39,18 @@ public class Controller {
 
     @FXML
     Button nextMoveButton;
+
+    @FXML
+    Text optimalSC;
+
+    @FXML
+    Text lengthSC;
+
+    @FXML
+    Text durationSC;
+
+    @FXML
+    Text solutionsSC;
 
     int currStrat = -1;
     int viewOption = -1;
@@ -98,6 +113,7 @@ public class Controller {
     }
 
     public void runListenerSC(ActionEvent actionEvent) {
+        optimalSC.setText("calculating..");
         try{
             timer.cancel();
         }
@@ -107,7 +123,13 @@ public class Controller {
         towers = Integer.parseInt(towersFieldSC.getText());
         disks = Integer.parseInt(disksFieldSC.getText());
         if(viewOption != -1 && currStrat!=-1){
+            long start = System.currentTimeMillis();
             sol = ContextManager.getSolution(towers,disks,currStrat);
+            lengthSC.setText(Integer.toString(sol.size()));
+            durationSC.setText(Long.toString((System.currentTimeMillis()-start)/1000));
+            optimalSC.setText(Integer.toString(ContextManager.getSolution(towers,disks,3).size()));
+
+
             if (sol != null)
                 DrawSolution(viewOption);
             else{

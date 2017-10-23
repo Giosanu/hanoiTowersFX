@@ -14,6 +14,8 @@ public class AStarStrategy implements IStrategy {
 
     @Override
     public ArrayList<State> solve(int numOfTowers, int numOfDisks) {
+        visitedStates.clear();
+        statePool.clear();
         State state = new State();
         state.Initialize(numOfTowers, numOfDisks);
         statePool.put(state.ID, state);

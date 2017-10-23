@@ -17,8 +17,12 @@ public class BacktrackingStrategy implements IStrategy {
     private static String END ;
     LinkedList<String> bestSol = new LinkedList<>();
 
+    long start,end;
+
     @Override
     public ArrayList<State> solve(int numOfTowers, int numOfDisks) {
+        visitedStates.clear();
+        statePool.clear();
         ProblemDomain problemDomain = new ProblemDomain();
         State state = new State(numOfTowers,numOfDisks);
         state.ResetState();
@@ -31,19 +35,27 @@ public class BacktrackingStrategy implements IStrategy {
         LinkedList<String> visited = new LinkedList();
         visited.add(state.ID);
 
+
+
         addNodes(problemDomain, state, numOfTowers);
+        start = System.currentTimeMillis();
+        end = start + 5*1000;
         depthFirst(problemDomain, visited);
+
+
 
         ArrayList<State> solution = new ArrayList<>();
 
         for (String s : bestSol){
-            System.out.print(s + " ");
             solution.add(new State(numOfTowers,numOfDisks,s));
         }
         return solution;
     }
 
     private void depthFirst(ProblemDomain graph, LinkedList<String> visited) {
+        if (System.currentTimeMillis() > end){
+            return;
+        }
         LinkedList<String> nodes = graph.adjacentNodes(visited.getLast());
         for (String node : nodes) {
             if (visited.contains(node)) {

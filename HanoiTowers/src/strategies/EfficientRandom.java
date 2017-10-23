@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class EfficientRandom implements IStrategy {
-    private ArrayList<State> visitedStates = new ArrayList<>();
-    private HashMap<String, State> statePool = new HashMap<>();
 
     @Override
     public ArrayList<State> solve(int numOfTowers, int numOfDisks) {
+        visitedStates.clear();
+        statePool.clear();
         State s = new State();
         State randomState;
         int counter = numOfDisks*numOfTowers*2000;
@@ -25,7 +25,6 @@ public class EfficientRandom implements IStrategy {
 
         long start = System.currentTimeMillis();
         long end = start + 20*1000;
-        boolean timeflag = false;
 
         while(!s.IsFinalState()) {
             if (currentCount < counter && !isBlockingState(s)) {
@@ -37,7 +36,7 @@ public class EfficientRandom implements IStrategy {
                         insertIntoPool(s.ComputeNeighbours(), numOfTowers);
                         visitedStates.add(s);
                     } else currentCount++;
-                } else {timeflag = true; break;}
+                } else { break;}
             } else {
                 s.ResetState();
                 insertIntoPool(s.ComputeNeighbours(), numOfTowers);
@@ -45,11 +44,6 @@ public class EfficientRandom implements IStrategy {
                 visitedStates.clear();
                 visitedStates.add(s);
             }
-        }
-
-        if(timeflag){
-            System.out.println("Program kekked");
-            return null;
         }
 
         for(State solution : visitedStates){
