@@ -7,12 +7,10 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class AStarStrategy implements IStrategy {
-    private ArrayList<State> visitedStates = new ArrayList<>(); //closedSet
-    ArrayList<State> openSet = new ArrayList<>();
-    HashMap<String, String> bestParentMap = new HashMap<>(); //cameFrom
-    HashMap<String, Double> gScore = new HashMap<>();
-    HashMap<String, Double> fScore = new HashMap<>();
-    HashMap<String, State> statePool = new HashMap<>();
+    private ArrayList<State> openSet = new ArrayList<>();
+    private HashMap<String, String> bestParentMap = new HashMap<>(); //cameFrom
+    private HashMap<String, Double> gScore = new HashMap<>();
+    private HashMap<String, Double> fScore = new HashMap<>();
 
     @Override
     public ArrayList<State> solve(int numOfTowers, int numOfDisks) {
@@ -37,8 +35,9 @@ public class AStarStrategy implements IStrategy {
             openSet.remove(state);
             visitedStates.add(state);
 
-            state.ComputeNeighbours();
-            for(State nghbr : state.getNeighbours()) {
+            insertIntoPool(state.ComputeNeighbours(), numOfTowers);
+            for(String nghbrID : state.getNeighbours()) {
+                State nghbr = statePool.get(nghbrID);
                 if (!gScore.containsKey(nghbr.ID))
                     gScore.put(nghbr.ID, Double.POSITIVE_INFINITY);
                 if (isAlreadyVisited(nghbr))
@@ -84,10 +83,6 @@ public class AStarStrategy implements IStrategy {
             }
         }
         return diskNotOnLast + 2*disksOnLast;
-    }
-
-    private boolean isAlreadyVisited(State state){
-        return visitedStates.contains(state);
     }
 
     private State lowestFScoreState(){

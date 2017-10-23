@@ -107,8 +107,7 @@ public class Controller {
         towers = Integer.parseInt(towersFieldSC.getText());
         disks = Integer.parseInt(disksFieldSC.getText());
         if(viewOption != -1 && currStrat!=-1){
-            ContextManager contextManager = new ContextManager();
-            sol = contextManager.getSolution(towers,disks,currStrat);
+            sol = ContextManager.getSolution(towers,disks,currStrat);
             if (sol != null)
                 DrawSolution(viewOption);
             else{

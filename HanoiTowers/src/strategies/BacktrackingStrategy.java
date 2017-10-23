@@ -14,7 +14,7 @@ public class BacktrackingStrategy implements IStrategy {
 
     @Override
     public ArrayList<State> solve(int numOfTowers, int numOfDisks) {
-        State state = new State();
+        /*State state = new State();
         state.Initialize(numOfTowers, numOfDisks);
         currentStack.addFirst(state);
 
@@ -66,6 +66,7 @@ public class BacktrackingStrategy implements IStrategy {
             }
         }
         return true;
+    }*/
+        return null;
     }
-
 }

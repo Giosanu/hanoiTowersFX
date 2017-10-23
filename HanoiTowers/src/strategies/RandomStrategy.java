@@ -3,9 +3,12 @@ package strategies;
 import items.State;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class RandomStrategy implements IStrategy {
     private ArrayList<State> visitedStates = new ArrayList<>();
+    HashMap<String, State> statePool = new HashMap<>();
 
     @Override
     public ArrayList<State> solve(int numOfTowers, int numOfDisks) {
@@ -16,7 +19,7 @@ public class RandomStrategy implements IStrategy {
         s.Initialize(numOfTowers, numOfDisks);
         visitedStates.add(s);
         int currentCount = 0;
-        s.ComputeNeighbours();
+        insertIntoPool(s.ComputeNeighbours(), numOfTowers);
 
         long start = System.currentTimeMillis();
         long end = start + 20*1000;
@@ -28,13 +31,13 @@ public class RandomStrategy implements IStrategy {
                     randomState.RandomizeState();
                     if (!isAlreadyVisited(randomState) && isNeighbour(s, randomState)) {
                         s = new State(randomState);
-                        s.ComputeNeighbours();
+                        insertIntoPool(s.ComputeNeighbours(), numOfTowers);
                         visitedStates.add(s);
                     } else currentCount++;
                 } else {timeflag = true; break;}
             } else {
                 s.ResetState();
-                s.ComputeNeighbours();
+                insertIntoPool(s.ComputeNeighbours(), numOfTowers);
                 currentCount = 0;
                 visitedStates.clear();
                 visitedStates.add(s);
@@ -51,22 +54,5 @@ public class RandomStrategy implements IStrategy {
         }
 
         return visitedStates;
-    }
-
-    private boolean isNeighbour(State state, State possibleNeighbour){
-        return state.getNeighbours().contains(possibleNeighbour);
-    }
-
-    private boolean isAlreadyVisited(State state){
-        return visitedStates.contains(state);
-    }
-
-    private boolean isBlockingState(State state){
-        for(State nghbr : state.getNeighbours()){
-            if(!visitedStates.contains(nghbr)){
-                return false;
-            }
-        }
-        return true;
     }
 }
