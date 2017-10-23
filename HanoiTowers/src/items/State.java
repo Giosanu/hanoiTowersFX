@@ -9,7 +9,7 @@ public class State {
     private int NumOfTowers;
     public int[] DiskPlacement;
     private int Score;
-    private ArrayList<State> Neighbours = new ArrayList<>();
+    private ArrayList<String> Neighbours = new ArrayList<>();
 
     public int getScore() {
         return Score;
@@ -48,6 +48,7 @@ public class State {
 
     public void ResetState(){
         Arrays.fill(DiskPlacement, 0);
+        ID = Arrays.toString(DiskPlacement);
     }
 
     public void Initialize(int numOfTowers, int numOfDisks){
@@ -57,7 +58,7 @@ public class State {
         ID = Arrays.toString(DiskPlacement);
     }
 
-    public ArrayList<State> getNeighbours() {
+    public ArrayList<String> getNeighbours() {
         return Neighbours;
     }
 
@@ -68,8 +69,9 @@ public class State {
         return true;
     }
 
-    public void ComputeNeighbours(){
+    public ArrayList<int[]> ComputeNeighbours(){
         Neighbours.clear();
+        ArrayList<int[]> neighboursList = new ArrayList<>();
         for(int i = 0; i< DiskPlacement.length; i++){
             int[] placeable = new int[NumOfTowers];
             Arrays.fill(placeable, 1);
@@ -85,10 +87,12 @@ public class State {
                 if(placeable[k] == 1) {
                     int[] placeholder = Arrays.copyOf(DiskPlacement, DiskPlacement.length);
                     placeholder[i] = k;
-                    Neighbours.add(new State(NumOfTowers, placeholder));
+                    Neighbours.add(Arrays.toString(placeholder));
+                    neighboursList.add(placeholder);
                 }
             }
         }
+        return neighboursList;
     }
 
     public void RandomizeState() {
@@ -96,6 +100,7 @@ public class State {
             Random rndGen = new Random();
             DiskPlacement[i] = rndGen.nextInt(NumOfTowers);
         }
+        ID = Arrays.toString(DiskPlacement);
     }
 
     public void ComputeScore(){

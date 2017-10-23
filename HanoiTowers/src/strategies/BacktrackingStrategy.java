@@ -31,7 +31,7 @@ public class BacktrackingStrategy implements IStrategy {
         LinkedList<String> visited = new LinkedList();
         visited.add(state.ID);
 
-        addNodes(problemDomain, state);
+        addNodes(problemDomain, state, numOfTowers);
         depthFirst(problemDomain, visited);
 
         ArrayList<State> solution = new ArrayList<>();
@@ -74,13 +74,14 @@ public class BacktrackingStrategy implements IStrategy {
         }
     }
 
-    private void addNodes(ProblemDomain problemDomain, State state) {
+    private void addNodes(ProblemDomain problemDomain, State state, int numOfTowers) {
         added.add(state.ID);
-        state.ComputeNeighbours();
-        for (State st : state.getNeighbours()) {
-            problemDomain.addEdge(state.ID,st.ID);
-            if(!added.contains(st.ID))
-                addNodes(problemDomain, st);
+        insertIntoPool(state.ComputeNeighbours(), numOfTowers);
+        for (String st : state.getNeighbours()) {
+            State intermediary = statePool.get(st);
+            problemDomain.addEdge(state.ID,intermediary.ID);
+            if(!added.contains(intermediary.ID))
+                addNodes(problemDomain, intermediary, numOfTowers);
         }
     }
 
