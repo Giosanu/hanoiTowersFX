@@ -3,6 +3,7 @@ package strategies;
 import items.State;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class AStarStrategy implements IStrategy {
@@ -24,8 +25,10 @@ public class AStarStrategy implements IStrategy {
 
         while(!openSet.isEmpty()){
             state = lowestFScoreState();
+            statePool.put(state.ID, state);
             if(state.IsFinalState()){
                 ArrayList<State> solution = reconstruct_path(bestParentMap, state.ID);
+                Collections.reverse(solution);
                 for(State so : solution){
                     System.out.println(so.toString());
                 }
@@ -36,7 +39,6 @@ public class AStarStrategy implements IStrategy {
 
             state.ComputeNeighbours();
             for(State nghbr : state.getNeighbours()) {
-                statePool.put(nghbr.ID, nghbr);
                 if (!gScore.containsKey(nghbr.ID))
                     gScore.put(nghbr.ID, Double.POSITIVE_INFINITY);
                 if (isAlreadyVisited(nghbr))
@@ -61,6 +63,7 @@ public class AStarStrategy implements IStrategy {
         path.add(statePool.get(stateID));
         while(bestParentMap.containsKey(stateID)){
             path.add(statePool.get(bestParentMap.get(stateID)));
+            stateID = statePool.get(bestParentMap.get(stateID)).ID;
         }
         return path;
     }
